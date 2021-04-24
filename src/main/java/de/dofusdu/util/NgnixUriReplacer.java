@@ -26,6 +26,6 @@ public class NgnixUriReplacer {
         if (optionalValue.isEmpty()) {
             return source;
         }
-        return URI.create(source.toString().replace(source.getHost() + ":" + source.getPort(), optionalValue.get()));
+        return URI.create(source.toString().replace("http://localhost:" + source.getPort(), optionalValue.get()));
     }
 }
