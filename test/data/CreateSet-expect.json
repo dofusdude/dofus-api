@@ -1,0 +1,37 @@
+{
+  "ankama_id": 10671,
+  "ankama_url": "https://www.dofus.com/de/mmorpg/leitfaden/konsumgueter/10673-mmmmmmmmmm-trank",
+  "image_url": "https://static.ankama.com/dofus/www/game/items/200/12191.png",
+  "level": 75,
+  "name": "bla-set",
+  "effects": [
+    {
+      "quantity": 1,
+      "bonus": [
+        {
+          "name": "Chance",
+          "value": "10"
+        }
+      ]
+    },
+    {
+      "quantity": 2,
+      "bonus": [
+        {
+          "name": "Chance",
+          "value": "30"
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "ankama_id": 10670,
+      "item_url": "http://localhost:8080/en/equipment/10670"
+    },
+    {
+      "ankama_id": 13896,
+      "item_url": "http://localhost:8080/en/weapons/13896"
+    }
+  ]
+}

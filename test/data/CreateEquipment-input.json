@@ -1,0 +1,39 @@
+{
+  "ankama_id": 10670,
+  "type": "Trank",
+  "description": "Mmmmm.",
+  "name": "MmmMmmMmmm-Trank",
+  "image_url": "https://static.ankama.com/dofus/www/game/items/200/12191.png",
+  "ankama_url": "https://www.dofus.com/de/mmorpg/leitfaden/konsumgueter/10673-mmmmmmmmmm-trank",
+  "level": 75,
+  "effects": [
+    {
+      "type": "(Luftschaden)",
+      "min": 61,
+      "max": 71
+    },
+    {
+      "type": "Vitalität",
+      "min": 251,
+      "max": 300
+    }
+  ],
+  "characteristics": [
+    {
+      "name": "Reichweite",
+      "value": "1"
+    },
+    {
+      "name": "KT",
+      "value": "1/5 (+10)"
+    }
+  ],
+  "conditions": null,
+  "recipe": [ {
+    "item_id": 124213,
+    "quantity": 2,
+    "item_type": "blume"
+  }
+  ]
+}
+
