@@ -18,6 +18,7 @@ package de.dofusdu.dto;
 
 import de.dofusdu.entity.Consumable;
 
+import javax.transaction.Transactional;
 import java.net.URI;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -45,6 +46,7 @@ public class ConsumableDTO extends ItemDTO {
         super();
     }
 
+    @Transactional
     public static ConsumableDTO from(Consumable consumable, String language, URI baseUri) {
         return new ConsumableDTO(consumable.getAnkamaId(), consumable.getName(language), consumable.getDescription(language), consumable.getImageUrl(), consumable.getAnkamaUrl(language), consumable.getType(language), consumable.getLevel(),
                 consumable.getEffects() == null || consumable.getEffects().isEmpty() ? null : consumable.getEffects().stream().map(eff -> ConsumableEffectDTO.from(eff, language)).collect(Collectors.toList()),
