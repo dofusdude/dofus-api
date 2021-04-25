@@ -111,6 +111,7 @@ public class ItemFinder {
         baseUri = NgnixUriReplacer.replace(baseUri);
 
         URI build = UriBuilder.fromUri(baseUri)
+                .path("dofus")
                 .path(language)
                 .path(resourceType.get())
                 .path(ankaId.toString())
