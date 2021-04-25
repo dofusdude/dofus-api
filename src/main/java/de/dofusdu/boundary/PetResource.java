@@ -53,7 +53,7 @@ import javax.ws.rs.core.UriInfo;
 import java.util.Optional;
 
 @RequestScoped
-@Path("/{language}/pets")
+@Path("/dofus/{language}/pets")
 public class PetResource {
     @ConfigProperty(name = "admin.api.secret")
     String apiKey;

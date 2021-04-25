@@ -53,7 +53,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequestScoped
-@Path("/{language}/weapons")
+@Path("/dofus/{language}/weapons")
 public class WeaponResource {
     @ConfigProperty(name = "admin.api.secret")
     String apiKey;

@@ -50,7 +50,7 @@ import javax.ws.rs.core.UriInfo;
 import java.util.Optional;
 
 @RequestScoped
-@Path("/{language}/equipment")
+@Path("/dofus/{language}/equipment")
 public class EquipmentResource {
     @ConfigProperty(name = "admin.api.secret")
     String apiKey;

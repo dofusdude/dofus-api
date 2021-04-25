@@ -50,7 +50,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Path("/{language}/search")
+@Path("/dofus/{language}/search")
 public class SearchResource {
 
     @Inject

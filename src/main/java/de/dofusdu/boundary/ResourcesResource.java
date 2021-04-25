@@ -59,7 +59,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequestScoped
-@Path("/{language}/resources")
+@Path("/dofus/{language}/resources")
 public class ResourcesResource {
 
     @Inject

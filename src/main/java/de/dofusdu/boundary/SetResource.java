@@ -47,7 +47,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.Optional;
 
-@Path("/{language}/sets")
+@Path("/dofus/{language}/sets")
 public class SetResource {
 
     @ConfigProperty(name = "admin.api.secret")
