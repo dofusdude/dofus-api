@@ -18,6 +18,7 @@ package de.dofusdu.dto;
 
 import de.dofusdu.entity.Item;
 import de.dofusdu.entity.RecipePosition;
+import de.dofusdu.util.NgnixUriReplacer;
 
 import javax.json.bind.annotation.JsonbProperty;
 import javax.ws.rs.core.UriBuilder;
@@ -41,11 +42,12 @@ public class RecipePositionDTO {
 
     public static RecipePositionDTO from(RecipePosition recipePosition, URI baseUri, String language) {
         Item item = recipePosition.getItem();
-        URI uri = UriBuilder.fromUri(baseUri)
+        URI uri = NgnixUriReplacer.replace(UriBuilder.fromUri(baseUri)
+                .path("dofus")
                 .path(language)
                 .path(item.getItemType())
                 .path(item.getAnkamaId().toString())
-                .build();
+                .build());
         return new RecipePositionDTO(uri.toString(), recipePosition.getQuantity(), recipePosition.getItem().getAnkamaId());
     }
 
