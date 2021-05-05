@@ -37,8 +37,8 @@ public class EquipmentDTO extends ItemDTO {
 
     public EquipmentDTO(Long ankamaId, String name, String description, String imageUrl, String ankamaUrl, String type,
                         Integer level, Collection<EffectDTO> effects,
-                        String conditions, Collection<RecipePositionDTO> recipe) {
-        super(ankamaId, name, description, imageUrl, ankamaUrl);
+                        String conditions, Collection<RecipePositionDTO> recipe, String itemType) {
+        super(ankamaId, name, description, imageUrl, ankamaUrl, itemType);
         this.type = type;
         this.level = level;
         this.effects = effects;
@@ -54,7 +54,8 @@ public class EquipmentDTO extends ItemDTO {
                 equipment.getRecipe() == null || (equipment.getRecipe().getPositions() == null || equipment.getRecipe().getPositions().isEmpty()) ? null : equipment.getRecipe().getPositions().stream().map(entityPos -> RecipePositionDTO.from(
                         entityPos, baseUri, language
                 ))
-                        .collect(Collectors.toList()));
+                        .collect(Collectors.toList()),
+                equipment.getItemType());
     }
 
     public Equipment toEquipment(String language, List<Effect> conEffects, Collection<RecipePosition> recipePositions, Branch branch) {

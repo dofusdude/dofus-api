@@ -30,15 +30,15 @@ public class PetDTO extends EquipmentDTO {
         super();
     }
 
-    public PetDTO(Long ankamaId, String name, String description, String imageUrl, String ankamaUrl, String type, Integer level, String conditions) {
-        super(ankamaId, name, description, imageUrl, ankamaUrl, type, level, null, conditions, null);
+    public PetDTO(Long ankamaId, String name, String description, String imageUrl, String ankamaUrl, String type, Integer level, String conditions, String itemType) {
+        super(ankamaId, name, description, imageUrl, ankamaUrl, type, level, null, conditions, null, itemType);
     }
 
     @Transactional
     public static PetDTO from(Pet pet, String language, URI baseUri) {
         EquipmentDTO equipmentDTO = EquipmentDTO.from(pet, language, baseUri);
 
-        PetDTO petDTO = new PetDTO(equipmentDTO.ankamaId, equipmentDTO.name, equipmentDTO.description, equipmentDTO.imageUrl, equipmentDTO.ankamaUrl, equipmentDTO.type, equipmentDTO.level, equipmentDTO.conditions);
+        PetDTO petDTO = new PetDTO(equipmentDTO.ankamaId, equipmentDTO.name, equipmentDTO.description, equipmentDTO.imageUrl, equipmentDTO.ankamaUrl, equipmentDTO.type, equipmentDTO.level, equipmentDTO.conditions, pet.getItemType());
         petDTO.characteristics = pet.getCharacteristics() == null || pet.getCharacteristics().isEmpty() ? null : pet.getCharacteristics().stream().map(el -> CharacteristicDTO.from(el, language)).collect(Collectors.toList());
         return petDTO;
     }

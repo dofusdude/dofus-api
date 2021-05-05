@@ -17,10 +17,13 @@
 package de.dofusdu.dto;
 
 import de.dofusdu.entity.Set;
+import org.eclipse.microprofile.config.ConfigProvider;
 
 import javax.json.bind.annotation.JsonbProperty;
+import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class SetDTO {
@@ -33,6 +36,8 @@ public class SetDTO {
     public Collection<ItemBasicDTO> items;
     @JsonbProperty("ankama_url")
     public String ankamaUrl;
+    @JsonbProperty("image_url_local")
+    public String imageUrlLocal;
     @JsonbProperty("effects")
     public Collection<SetBonusPositionDTO> bonus;
 
@@ -47,6 +52,16 @@ public class SetDTO {
         this.items = items;
         this.ankamaUrl = ankamaUrl;
         this.bonus = bonus;
+        Optional<String> service_hostname = ConfigProvider.getConfig().getOptionalValue("service.hostname", String.class);
+        String service_host = "http://localhost";
+        if (service_hostname.isPresent()) {
+            service_host = service_hostname.get();
+        }
+        this.imageUrlLocal = UriBuilder.fromPath(service_host)
+                .path("static")
+                .path("sets")
+                .path(ankamaId + ".png")
+                .build().toString();
     }
 
     public static SetDTO from(Set set, String language, URI baseUri) {
