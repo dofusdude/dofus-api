@@ -39,7 +39,7 @@ public class CreateEquipmentDTO extends ItemDTO {
     public CreateEquipmentDTO(Long ankamaId, String name, String description, String imageUrl, String ankamaUrl, String type,
                               Integer level, Collection<EffectDTO> effects,
                               String conditions, Collection<CreateRecipePositionDTO> recipe) {
-        super(ankamaId, name, description, imageUrl, ankamaUrl);
+        super(ankamaId, name, description, imageUrl, ankamaUrl, null);
         this.type = type;
         this.level = level;
         this.effects = effects;

@@ -30,7 +30,7 @@ public class CreateConsumableDTO extends ItemDTO {
     public Collection<CreateRecipePositionDTO> recipe;
 
     public CreateConsumableDTO(Long ankamaId, String name, String description, String imageUrl, String ankamaUrl, String type, Integer level, Collection<String> effects, String conditions, Collection<CreateRecipePositionDTO> recipe) {
-        super(ankamaId, name, description, imageUrl, ankamaUrl);
+        super(ankamaId, name, description, imageUrl, ankamaUrl, null);
         this.type = type;
         this.level = level;
         this.effects = effects;

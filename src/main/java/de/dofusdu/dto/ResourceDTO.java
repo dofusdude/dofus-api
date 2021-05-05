@@ -28,8 +28,8 @@ public class ResourceDTO extends ItemDTO {
     public Integer level;
     public Collection<RecipePositionDTO> recipe;
 
-    public ResourceDTO(Long ankamaId, String name, String description, String imageUrl, String ankamaUrl, String type, Integer level, Collection<RecipePositionDTO> recipe) {
-        super(ankamaId, name, description, imageUrl, ankamaUrl);
+    public ResourceDTO(Long ankamaId, String name, String description, String imageUrl, String ankamaUrl, String type, Integer level, Collection<RecipePositionDTO> recipe, String itemType) {
+        super(ankamaId, name, description, imageUrl, ankamaUrl, itemType);
         this.type = type;
         this.level = level;
         this.recipe = recipe;
@@ -42,7 +42,8 @@ public class ResourceDTO extends ItemDTO {
     @Transactional
     public static ResourceDTO from(Resource r, String language, URI baseUri) {
         return new ResourceDTO(r.getAnkamaId(), r.getName(language), r.getDescription(language), r.getImageUrl(), r.getAnkamaUrl(language), r.getType(language), r.getLevel(),
-                r.getRecipe() == null ? null : r.getRecipe().getPositions().stream().map(el -> RecipePositionDTO.from(el, baseUri, language)).collect(Collectors.toList()));
+                r.getRecipe() == null ? null : r.getRecipe().getPositions().stream().map(el -> RecipePositionDTO.from(el, baseUri, language)).collect(Collectors.toList()),
+                r.getItemType());
     }
 
 

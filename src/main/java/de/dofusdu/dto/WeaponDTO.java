@@ -31,8 +31,8 @@ public class WeaponDTO extends EquipmentDTO {
         super();
     }
 
-    public WeaponDTO(Long ankamaId, String name, String description, String imageUrl, String ankamaUrl, String type, Integer level, Collection<EffectDTO> effects, String conditions, Collection<RecipePositionDTO> recipe) {
-        super(ankamaId, name, description, imageUrl, ankamaUrl, type, level, effects, conditions, recipe);
+    public WeaponDTO(Long ankamaId, String name, String description, String imageUrl, String ankamaUrl, String type, Integer level, Collection<EffectDTO> effects, String conditions, Collection<RecipePositionDTO> recipe, String itemType) {
+        super(ankamaId, name, description, imageUrl, ankamaUrl, type, level, effects, conditions, recipe, itemType);
     }
 
     @Transactional
@@ -40,7 +40,7 @@ public class WeaponDTO extends EquipmentDTO {
         EquipmentDTO equipmentDTO = EquipmentDTO.from(weapon, language, baseUri);
 
         WeaponDTO weaponDTO = new WeaponDTO(equipmentDTO.ankamaId, equipmentDTO.name, equipmentDTO.description, equipmentDTO.imageUrl, equipmentDTO.ankamaUrl, equipmentDTO.type, equipmentDTO.level,
-                equipmentDTO.effects, equipmentDTO.conditions, equipmentDTO.recipe);
+                equipmentDTO.effects, equipmentDTO.conditions, equipmentDTO.recipe, weapon.getItemType());
         weaponDTO.characteristics = weapon.getCharacteristics().stream().map(el -> CharacteristicDTO.from(el, language)).collect(Collectors.toList());
         return weaponDTO;
     }
