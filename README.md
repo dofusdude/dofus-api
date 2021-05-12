@@ -1,4 +1,5 @@
 # Dofus API
+[![Build](https://github.com/dofusdude/dofus-api/actions/workflows/maven.yml/badge.svg?branch=main)](https://github.com/dofusdude/dofus-api/actions/workflows/maven.yml)
 
 A multilingual API for the Dofus encyclopedia.
 
