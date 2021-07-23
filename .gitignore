@@ -7,6 +7,7 @@ release.properties
 
 # Data
 postgres-data
+postgres-data.zip
 
 docker-compose.prod.yml
 src/main/resources/application.dev.properties
