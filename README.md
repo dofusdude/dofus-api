@@ -22,6 +22,9 @@ Note: The API is build on Quarkus. https://quarkus.io for more.
 The Dofus encyclopedia isn't always up-to-date. A fix for that is already planned for later versions.
 For the moment being the API can only be changed with the API key.
 
+## Awesome projects using the API
+- [Craftlist](https://dofus-craftlist.netlify.app) by Lystina
+
 ## License
 Author: Christopher Sieh <stelzo@steado.de>
 
