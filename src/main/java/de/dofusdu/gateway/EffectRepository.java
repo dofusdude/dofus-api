@@ -40,7 +40,7 @@ public class EffectRepository {
     EntityManager em;
 
     @Transactional
-    @CacheResult(cacheName = "effectClosestName")
+    //@CacheResult(cacheName = "effectClosestName")
     public Optional<Attribute> closestIdByNameCached(String nameSearch, String language) {
         return closestIdByName(nameSearch, language);
     }

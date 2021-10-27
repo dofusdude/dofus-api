@@ -52,13 +52,13 @@ public class PetRepository implements Repository {
     }
 
     @Transactional
-    @CacheResult(cacheName = "petId")
+    //@CacheResult(cacheName = "petId")
     public Optional<Pet> byIdCached(Long ankamaId) {
         return byId(ankamaId);
     }
 
     @Transactional
-    @CacheResult(cacheName = "petList")
+    //@CacheResult(cacheName = "petList")
     public List<Pet> allCached() {
         return all();
     }
@@ -76,7 +76,7 @@ public class PetRepository implements Repository {
     }
 
     @Transactional
-    @CacheResult(cacheName = "petsNames")
+    //@CacheResult(cacheName = "petsNames")
     public List<ItemNameDTO> allBasicName(String language, URI absoluteUri) {
         TypedQuery<ItemNameDTO> query;
         switch (language) {

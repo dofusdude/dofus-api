@@ -40,13 +40,13 @@ public class EquipmentRepository implements Repository {
     EntityManager em;
 
     @Transactional
-    @CacheResult(cacheName = "equipmentId")
+    //@CacheResult(cacheName = "equipmentId")
     public Optional<Equipment> byIdCached(Long ankamaId) {
         return byId(ankamaId);
     }
 
     @Transactional
-    @CacheResult(cacheName = "equipmentList")
+    //@CacheResult(cacheName = "equipmentList")
     public List<Equipment> allCached() {
         return all();
     }
@@ -64,7 +64,7 @@ public class EquipmentRepository implements Repository {
     }
 
     @Transactional
-    @CacheResult(cacheName = "equipmentNames")
+    //@CacheResult(cacheName = "equipmentNames")
     public List<ItemNameDTO> allBasicName(String language, URI absoluteUri) {
         TypedQuery<ItemNameDTO> query;
         switch (language) {

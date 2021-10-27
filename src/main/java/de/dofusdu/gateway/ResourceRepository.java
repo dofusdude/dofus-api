@@ -54,13 +54,13 @@ public class ResourceRepository implements Repository {
     }
 
     @Transactional
-    @CacheResult(cacheName = "resourceId")
+    //@CacheResult(cacheName = "resourceId")
     public Optional<Resource> byIdCached(Long ankamaId) {
         return byId(ankamaId);
     }
 
     @Transactional
-    @CacheResult(cacheName = "resourceList")
+    //@CacheResult(cacheName = "resourceList")
     public List<Resource> allCached() {
         return all();
     }
@@ -78,7 +78,7 @@ public class ResourceRepository implements Repository {
     }
 
     @Transactional
-    @CacheResult(cacheName = "resourcesNames")
+    //@CacheResult(cacheName = "resourcesNames")
     public List<ItemNameDTO> allBasicName(String language, URI absoluteUri) {
         TypedQuery<ItemNameDTO> query;
         switch (language) {
