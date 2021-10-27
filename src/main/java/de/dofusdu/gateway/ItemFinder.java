@@ -97,7 +97,7 @@ public class ItemFinder {
         }
     }
 
-    @CacheResult(cacheName = "findItemAnkaId")
+    //@CacheResult(cacheName = "findItemAnkaId")
     public Optional<Item> findItemCached(Long ankamaId) {
         return findItem(ankamaId);
     }

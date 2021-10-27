@@ -41,13 +41,13 @@ public class ConsumableRepository implements Repository {
     EntityManager em;
 
     @Transactional
-    @CacheResult(cacheName = "consumableId")
+    //@CacheResult(cacheName = "consumableId")
     public Optional<Consumable> byIdCached(Long ankamaId) {
         return byId(ankamaId);
     }
 
     @Transactional
-    @CacheResult(cacheName = "consumableList")
+    //@CacheResult(cacheName = "consumableList")
     public List<Consumable> allCached() {
         return all();
     }
@@ -65,7 +65,7 @@ public class ConsumableRepository implements Repository {
     }
 
     @Transactional
-    @CacheResult(cacheName = "consumablesNames")
+    //@CacheResult(cacheName = "consumablesNames")
     public List<ItemNameDTO> allBasicName(String language, URI absoluteUri) {
         TypedQuery<ItemNameDTO> query;
         switch (language) {

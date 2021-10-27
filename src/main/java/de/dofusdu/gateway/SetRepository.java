@@ -40,13 +40,13 @@ public class SetRepository implements Repository {
     EntityManager em;
 
     @Transactional
-    @CacheResult(cacheName = "setId")
+    //@CacheResult(cacheName = "setId")
     public Optional<Set> byIdCached(Long ankamaId) {
         return byId(ankamaId);
     }
 
     @Transactional
-    @CacheResult(cacheName = "setList")
+    //@CacheResult(cacheName = "setList")
     public List<Set> allCached() {
         return all();
     }
@@ -89,7 +89,7 @@ public class SetRepository implements Repository {
     }
 
     @Transactional
-    @CacheResult(cacheName = "setsNames")
+    //@CacheResult(cacheName = "setsNames")
     public List<ItemNameDTO> allBasicName(String language, URI absoluteUri) {
         TypedQuery<ItemNameDTO> query;
         switch (language) {

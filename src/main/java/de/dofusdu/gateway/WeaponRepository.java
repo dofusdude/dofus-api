@@ -52,13 +52,13 @@ public class WeaponRepository implements Repository {
     }
 
     @Transactional
-    @CacheResult(cacheName = "weaponId")
+    //@CacheResult(cacheName = "weaponId")
     public Optional<Weapon> byIdCached(Long ankamaId) {
         return byId(ankamaId);
     }
 
     @Transactional
-    @CacheResult(cacheName = "weaponList")
+    //@CacheResult(cacheName = "weaponList")
     public List<Weapon> allCached() {
         return all();
     }
@@ -90,7 +90,7 @@ public class WeaponRepository implements Repository {
     }
 
     @Transactional
-    @CacheResult(cacheName = "weaponsNames")
+    //@CacheResult(cacheName = "weaponsNames")
     public List<ItemNameDTO> allBasicName(String language, URI absoluteUri) {
         TypedQuery<ItemNameDTO> query;
         switch (language) {

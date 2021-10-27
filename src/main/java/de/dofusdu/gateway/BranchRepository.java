@@ -31,12 +31,12 @@ public class BranchRepository {
     @Inject
     EntityManager em;
 
-    @CacheResult(cacheName = "branchId")
+    //@CacheResult(cacheName = "branchId")
     public Optional<Branch> byId(Long id) {
         return Optional.of(em.find(Branch.class, id));
     }
 
-    @CacheResult(cacheName = "branchMain")
+    //@CacheResult(cacheName = "branchMain")
     public Branch main() {
         return byName("main").get();
     }
