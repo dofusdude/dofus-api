@@ -133,7 +133,7 @@ public class SearchResource {
                 .map(it -> it.name)
                 .collect(Collectors.toList()))
                 .map(nameList -> FuzzySearch.extractOne(query, nameList))
-                .filter(categorieResult -> categorieResult.getScore() > useThreshold)
+                .filter(categorieResult -> categorieResult.getScore() >= useThreshold)
                 .collect(Collectors.toList());
 
         if (collect.isEmpty()) {
@@ -143,7 +143,7 @@ public class SearchResource {
         int highestScore = -1;
         int highestScoreIndex = -1;
         for (int i = 0; i < collect.size(); i++) {
-            if (collect.get(i).getScore() >= useThreshold && collect.get(i).getScore() > highestScore) {
+            if (collect.get(i).getScore() > highestScore) {
                 highestScore = collect.get(i).getScore();
                 highestScoreIndex = i;
             }
