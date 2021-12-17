@@ -21,10 +21,12 @@ public class SearchResult {
     public Long ankama_id;
     public String type;
     public String url;
+    public int score;
 
-    public SearchResult(Long ankama_id, String type, String url) {
+    public SearchResult(Long ankama_id, String type, String url, int score) {
         this.ankama_id = ankama_id;
         this.type = type;
         this.url = url;
+        this.score = score;
     }
 }

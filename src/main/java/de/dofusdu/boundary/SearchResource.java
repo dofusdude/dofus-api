@@ -39,10 +39,7 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
@@ -83,7 +80,8 @@ public class SearchResource {
     @Tag(name = "Search")
     @Parameters({
             @Parameter(name = "language", in = ParameterIn.PATH, example = "en", description = "Language as code of length 2."),
-            @Parameter(name = "query", in = ParameterIn.PATH, example = "meow", description = "Fuzzy name")
+            @Parameter(name = "query", in = ParameterIn.PATH, example = "meow", description = "Fuzzy name"),
+            @Parameter(name = "threshold", in = ParameterIn.QUERY, example = "80", description = "minimal inclusive similarity score", required = false)
     })
     @APIResponses({
             @APIResponse(
@@ -114,7 +112,8 @@ public class SearchResource {
     @Path("/{query}")
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     public SearchResult findItemByName(@PathParam("language") String language,
-                                       @PathParam("query") String query) {
+                                       @PathParam("query") String query,
+                                       @QueryParam("threshold") @DefaultValue("-1") int threshold) {
 
         LanguageHelper.checkLanguage(language);
 
@@ -129,16 +128,22 @@ public class SearchResource {
                 setRepository.allBasicName(language, absolutePath));
 
         // convert to list of results for best hit in every category
+        final int useThreshold = threshold != -1 ? threshold : 0;
         List<ExtractedResult> collect = lists.stream().map(l -> l.stream()
                 .map(it -> it.name)
                 .collect(Collectors.toList()))
                 .map(nameList -> FuzzySearch.extractOne(query, nameList))
+                .filter(categorieResult -> categorieResult.getScore() > useThreshold)
                 .collect(Collectors.toList());
+
+        if (collect.isEmpty()) {
+            throw new NotFoundException();
+        }
 
         int highestScore = -1;
         int highestScoreIndex = -1;
         for (int i = 0; i < collect.size(); i++) {
-            if (collect.get(i).getScore() > highestScore) {
+            if (collect.get(i).getScore() >= useThreshold && collect.get(i).getScore() > highestScore) {
                 highestScore = collect.get(i).getScore();
                 highestScoreIndex = i;
             }
@@ -146,6 +151,6 @@ public class SearchResource {
 
         ItemNameDTO winner = lists.get(highestScoreIndex) // list with highest score in name comparison
                 .get(collect.get(highestScoreIndex).getIndex()); // get in that list the element at the highest score index
-        return new SearchResult(winner.ankamaId, searchItemTypes.get(highestScoreIndex), itemFinder.linkForAnkaId(winner.ankamaId, uriInfo.getBaseUri(), language).get().toString());
+        return new SearchResult(winner.ankamaId, searchItemTypes.get(highestScoreIndex), itemFinder.linkForAnkaId(winner.ankamaId, uriInfo.getBaseUri(), language).get().toString(), highestScore);
     }
 }
