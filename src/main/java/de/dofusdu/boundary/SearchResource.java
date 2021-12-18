@@ -145,6 +145,10 @@ public class SearchResource {
             }
         }
 
+        if (highestScoreIndex == -1) { // nothing survived the threshold
+            throw new NotFoundException();
+        }
+
         ItemNameDTO winner = lists.get(highestScoreIndex) // list with highest score in name comparison
                 .get(collect.get(highestScoreIndex).getIndex()); // get in that list the element at the highest score index
         return new SearchResult(winner.ankamaId, searchItemTypes.get(highestScoreIndex), itemFinder.linkForAnkaId(winner.ankamaId, uriInfo.getBaseUri(), language).get().toString(), highestScore);
