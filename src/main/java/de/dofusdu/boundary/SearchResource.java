@@ -104,9 +104,6 @@ public class SearchResource {
             )
     })
     @Produces(MediaType.APPLICATION_JSON)
-    @Timeout
-    @CircuitBreaker
-    @Retry
     @Counted(name = "searchNameCount")
     @Timed(name = "searchNameTime")
     @Path("/{query}")
