@@ -125,12 +125,10 @@ public class SearchResource {
                 setRepository.allBasicName(language, absolutePath));
 
         // convert to list of results for best hit in every category
-        final int useThreshold = threshold != -1 ? threshold : 0;
         List<ExtractedResult> collect = lists.stream().map(l -> l.stream()
                 .map(it -> it.name)
                 .collect(Collectors.toList()))
                 .map(nameList -> FuzzySearch.extractOne(query, nameList))
-                .filter(categorieResult -> categorieResult.getScore() >= useThreshold)
                 .collect(Collectors.toList());
 
         if (collect.isEmpty()) {
@@ -139,8 +137,9 @@ public class SearchResource {
 
         int highestScore = -1;
         int highestScoreIndex = -1;
+        final int useThreshold = threshold != -1 ? threshold : 0;
         for (int i = 0; i < collect.size(); i++) {
-            if (collect.get(i).getScore() > highestScore) {
+            if (collect.get(i).getScore() >= useThreshold && collect.get(i).getScore() > highestScore) {
                 highestScore = collect.get(i).getScore();
                 highestScoreIndex = i;
             }
