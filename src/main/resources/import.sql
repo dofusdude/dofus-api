@@ -154,6 +154,3 @@ VALUES
 (FALSE,'64'),
 (FALSE,'65'),
 (FALSE,'66');
-
-INSERT INTO "public"."branch"("id", "name")
-VALUES (1, "main");
