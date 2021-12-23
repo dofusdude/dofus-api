@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+/* TODO pods, reflect (Sulik lvl 167) */
 INSERT INTO "public"."branch"("id", "name") VALUES(1, 'main') RETURNING "id", "name";
 
 INSERT INTO "public"."multilingualentity"("id","name_de","name_en","name_es","name_fr","name_it","name_pt")
@@ -153,3 +154,6 @@ VALUES
 (FALSE,'64'),
 (FALSE,'65'),
 (FALSE,'66');
+
+INSERT INTO "public"."branch"("id", "name")
+VALUES (1, "main");
