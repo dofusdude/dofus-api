@@ -1,1 +1,0 @@
-CREATE DATABASE "krosmoz_items";

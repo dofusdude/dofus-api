@@ -16,11 +16,10 @@
 
 package de.dofusdu.entity;
 
-import de.dofusdu.util.IntegerArray;
-
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class ConsumableEffect {
@@ -32,19 +31,19 @@ public class ConsumableEffect {
     @ManyToOne
     private MultilingualEntity name;
 
-    @Lob
-    private IntegerArray values;
+    @ElementCollection
+    private List<Integer> values;
 
     public ConsumableEffect() {
         super();
     }
 
     public Collection<Integer> getValues() {
-        return Arrays.asList(values.getValues());
+        return values;
     }
 
     public void setValues(Collection<Integer> values) {
-        this.values = new IntegerArray(values.toArray(Integer[]::new));
+        this.values = (List<Integer>) values;
     }
 
     public void setName(MultilingualEntity name) {
@@ -56,8 +55,7 @@ public class ConsumableEffect {
     }
 
     public ConsumableEffect(String name, String lang, Collection<Integer> values) {
-        IntegerArray integerArray = new IntegerArray(values.toArray(Integer[]::new));
-        this.values = integerArray;
+        this.values = (List<Integer>) values;
         this.name = new MultilingualEntity(name, lang);
     }
 }
