@@ -17,7 +17,10 @@
 package de.dofusdu.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Consumable extends Item {
@@ -28,7 +31,7 @@ public class Consumable extends Item {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "effect")
-    private Collection<ConsumableEffect> effects;
+    private List<MultilingualEntity> effects;
 
     @OneToOne(cascade = CascadeType.ALL)
     private MultilingualEntity conditions;
@@ -36,11 +39,27 @@ public class Consumable extends Item {
     @OneToOne(cascade = CascadeType.ALL)
     private Recipe recipe;
 
-    public Consumable(Long ankamaId, String name, String description, String imageUrl, String ankamaUrl, String language, String type, Integer level, Collection<ConsumableEffect> effects, String conditions, Recipe recipe, Branch branch) {
+    public Consumable(Long ankamaId, String name, String description, String imageUrl, String ankamaUrl, String language, String type, Integer level, List<String> effects, String conditions, Recipe recipe, Branch branch) {
         super(ankamaId, name, description, imageUrl, ankamaUrl, language, branch);
         this.type = new MultilingualEntity(type, language);
         this.level = level;
-        this.effects = effects;
+        List<String> effectList = new ArrayList<>();
+        if (effects == null) {
+            this.effects = null;
+        } else {
+            for (int i = 0; i < effects.size(); i++) {
+                String singleEffect = effects.get(i);
+                if (singleEffect.contains("\n")) {
+                    List<String> inner = List.of(singleEffect.split("\n"));
+                    for (int j = 0; j < inner.size(); j++) {
+                        effectList.add(inner.get(j));
+                    }
+                } else {
+                    effectList.add(singleEffect);
+                }
+            }
+        }
+        this.effects = effectList.stream().map(eff -> new MultilingualEntity(eff, language)).collect(Collectors.toList());
         this.conditions = new MultilingualEntity(conditions, language);
         this.recipe = recipe;
     }
@@ -65,12 +84,18 @@ public class Consumable extends Item {
         this.level = level;
     }
 
-    public Collection<ConsumableEffect> getEffects() {
-        return effects;
+    public Collection<String> getEffects(String language) {
+        return this.effects.stream().map(eff -> eff.getName(language)).collect(Collectors.toList());
     }
 
-    public void setEffects(Collection<ConsumableEffect> effects) {
-        this.effects = effects;
+    public void setEffects(List<String> effects, String language) {
+        for(int i = 0; i < effects.size(); i++) {
+            this.effects.get(i).setName(effects.get(i), language);
+        }
+    }
+
+    public void translateEffect(int index, String language, String value) {
+        this.effects.get(index).setName(value, language);
     }
 
     public String getConditions(String language) {

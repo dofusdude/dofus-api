@@ -201,11 +201,13 @@ public class ConsumableResource {
             throw new BadRequestException();
         }
 
+        /* TODO linking effects isn't always possible since the encyclopedia entries text can't be seperated into key value pairs all the time
         Collection<String> effects = consumable.effects;
         List<ConsumableEffect> conEffects = null;
         if (effects != null && !effects.isEmpty()) {
             // filter out all numbers, search in database for the rest
             conEffects = effects.stream().map(ef -> {
+
                 List<Integer> l = numbersFromString(ef);
                 for (Integer el : l) {
                     ef = ef.replace(" +" + el.toString() + " ", "");
@@ -216,20 +218,20 @@ public class ConsumableResource {
                 }
                 ef = ef.strip();
                 // search for this effect
-
+                ConsumableEffect consumableEffect = new ConsumableEffect();
                 Optional<Attribute> effect = effectRepository.closestIdByName(ef, language);
                 if (effect.isEmpty()) {
-                    throw new RuntimeException("Effect unknown.");
+                    consumableEffect.setValues(List.of(ef));
+                    consumableEffect.setName(effect.get());
+                    //throw new RuntimeException("Effect unknown.");
                 }
-
-                ConsumableEffect consumableEffect = new ConsumableEffect();
                 consumableEffect.setName(effect.get());
-                consumableEffect.setValues(l);
-
+                consumableEffect.setValues(ef.stream().map(digit -> String.valueOf(digit)).collect(Collectors.toList()));
                 return consumableEffect;
             })
                     .collect(Collectors.toList());
         }
+        */
 
         Collection<CreateRecipePositionDTO> recipe = consumable.recipe;
         List<RecipePosition> conRecipe = null;
@@ -245,7 +247,7 @@ public class ConsumableResource {
                     .collect(Collectors.toList());
         }
 
-        Consumable r = consumable.toConsumable(language, conEffects, conRecipe, branchRepository.main());
+        Consumable r = consumable.toConsumable(language, conRecipe, branchRepository.main());
         Consumable persist = consumableRepository.persist(r);
 
         return ConsumableDTO.from(persist, language, uriInfo.getBaseUri());
@@ -280,6 +282,29 @@ public class ConsumableResource {
         persisted.setType(equipmentDTO.type, language);
         persisted.setAnkamaUrl(equipmentDTO.ankamaUrl, language);
         persisted.setDescription(equipmentDTO.description, language);
+        if (equipmentDTO.effects != null && !equipmentDTO.effects.isEmpty()) {
+            List<String> effectList = new ArrayList<>();
+            for (int i = 0; i < equipmentDTO.effects.size(); i++) { // same algorithm for creating the effect
+                String singleEffect = equipmentDTO.effects.get(i);
+                if (singleEffect.contains("\n")) {
+                    List<String> inner = List.of(singleEffect.split("\n"));
+                    for (int j = 0; j < inner.size(); j++) {
+                        effectList.add(inner.get(j));
+                    }
+                } else {
+                    effectList.add(singleEffect);
+                }
+            }
+            equipmentDTO.effects = effectList;
+
+            if (equipmentDTO.effects.size() != persisted.getEffects(LanguageHelper.getString(LanguageHelper.Language.ENGLISH)).size()) {
+                throw new BadRequestException();
+            }
+
+            for (int i = 0; i < equipmentDTO.effects.size(); i++) {
+                persisted.translateEffect(i, language, equipmentDTO.effects.get(i));
+            }
+        }
 
         // update language specifics for equipment
         persisted.setConditions(equipmentDTO.conditions, language);

@@ -25,11 +25,11 @@ public class CreateConsumableDTO extends ItemDTO {
     public String type;
     public Integer level;
 
-    public Collection<String> effects;
+    public List<String> effects;
     public String conditions;
     public Collection<CreateRecipePositionDTO> recipe;
 
-    public CreateConsumableDTO(Long ankamaId, String name, String description, String imageUrl, String ankamaUrl, String type, Integer level, Collection<String> effects, String conditions, Collection<CreateRecipePositionDTO> recipe) {
+    public CreateConsumableDTO(Long ankamaId, String name, String description, String imageUrl, String ankamaUrl, String type, Integer level, List<String> effects, String conditions, Collection<CreateRecipePositionDTO> recipe) {
         super(ankamaId, name, description, imageUrl, ankamaUrl, null);
         this.type = type;
         this.level = level;
@@ -42,13 +42,13 @@ public class CreateConsumableDTO extends ItemDTO {
         super();
     }
 
-    public Consumable toConsumable(String language, List<ConsumableEffect> conEffects, Collection<RecipePosition> recipePositions, Branch branch) {
+    public Consumable toConsumable(String language, Collection<RecipePosition> recipePositions, Branch branch) {
         Recipe recipe = null;
         if (recipePositions != null && !recipePositions.isEmpty()) {
             recipe = new Recipe();
             recipe.setPositions(recipePositions);
         }
         return new Consumable(ankamaId, name, description, imageUrl, ankamaUrl, language, type, level,
-                conEffects == null || conEffects.isEmpty() ? null : conEffects, conditions, recipe, branch);
+                effects == null || effects.isEmpty() ? null : effects, conditions, recipe, branch);
     }
 }

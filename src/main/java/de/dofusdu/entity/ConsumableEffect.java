@@ -17,7 +17,6 @@
 package de.dofusdu.entity;
 
 import javax.persistence.*;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -31,19 +30,28 @@ public class ConsumableEffect {
     @ManyToOne
     private MultilingualEntity name;
 
-    @ElementCollection
-    private List<Integer> values;
+    private String values;
 
     public ConsumableEffect() {
         super();
     }
 
-    public Collection<Integer> getValues() {
-        return values;
+    public List<String> getValues() {
+        String[] split = values.split(";");
+        return List.of(split);
     }
 
-    public void setValues(Collection<Integer> values) {
-        this.values = (List<Integer>) values;
+    public void setValues(Collection<String> values) {
+        String delimiter = ";";
+
+        String result = "", prefix = "";
+        for (String s: values)
+        {
+            result += prefix + s;
+            prefix = delimiter;
+        }
+
+        this.values = result;
     }
 
     public void setName(MultilingualEntity name) {
@@ -54,8 +62,8 @@ public class ConsumableEffect {
         return name;
     }
 
-    public ConsumableEffect(String name, String lang, Collection<Integer> values) {
-        this.values = (List<Integer>) values;
+    public ConsumableEffect(String name, String lang, Collection<String> values) {
+        this.setValues(values);
         this.name = new MultilingualEntity(name, lang);
     }
 }

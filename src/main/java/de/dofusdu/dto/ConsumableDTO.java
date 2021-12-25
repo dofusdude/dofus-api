@@ -28,11 +28,11 @@ public class ConsumableDTO extends ItemDTO {
     public String type;
     public Integer level;
 
-    public Collection<ConsumableEffectDTO> effects;
+    public Collection<String> effects;
     public String conditions;
     public Collection<RecipePositionDTO> recipe;
 
-    public ConsumableDTO(Long ankamaId, String name, String description, String imageUrl, String ankamaUrl, String type, Integer level, Collection<ConsumableEffectDTO> effects, String conditions, Collection<RecipePositionDTO> recipe, String itemType) {
+    public ConsumableDTO(Long ankamaId, String name, String description, String imageUrl, String ankamaUrl, String type, Integer level, Collection<String> effects, String conditions, Collection<RecipePositionDTO> recipe, String itemType) {
         super(ankamaId, name, description, imageUrl, ankamaUrl, itemType);
         this.type = type;
         this.level = level;
@@ -49,7 +49,7 @@ public class ConsumableDTO extends ItemDTO {
     @Transactional
     public static ConsumableDTO from(Consumable consumable, String language, URI baseUri) {
         return new ConsumableDTO(consumable.getAnkamaId(), consumable.getName(language), consumable.getDescription(language), consumable.getImageUrl(), consumable.getAnkamaUrl(language), consumable.getType(language), consumable.getLevel(),
-                consumable.getEffects() == null || consumable.getEffects().isEmpty() ? null : consumable.getEffects().stream().map(eff -> ConsumableEffectDTO.from(eff, language)).collect(Collectors.toList()),
+                consumable.getEffects(language) == null || consumable.getEffects(language).isEmpty() ? null : consumable.getEffects(language),
                 consumable.getConditions(language),
                 consumable.getRecipe() == null || consumable.getRecipe().getPositions() == null || consumable.getRecipe().getPositions().isEmpty() ? null : consumable.getRecipe().getPositions().stream().map(el -> RecipePositionDTO.from(el, baseUri, language)).collect(Collectors.toList()),
                 consumable.getItemType()

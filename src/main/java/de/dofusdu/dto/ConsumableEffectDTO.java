@@ -20,13 +20,14 @@ import de.dofusdu.entity.ConsumableEffect;
 
 import javax.json.bind.annotation.JsonbProperty;
 import java.util.Collection;
+import java.util.List;
 
 public class ConsumableEffectDTO {
     @JsonbProperty("type")
     public String name;
-    public Collection<Integer> values;
+    public Collection<String> values;
 
-    public ConsumableEffectDTO(String name, Collection<Integer> values) {
+    public ConsumableEffectDTO(String name, Collection<String> values) {
         this.name = name;
         this.values = values;
     }
