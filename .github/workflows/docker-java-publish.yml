@@ -44,12 +44,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3.0.2
-      
-      - name: Build jar
-        run: ./mvnw clean package -DskipTests
 
-      - name: Build image
-        run: docker build -f src/main/docker/Dockerfile.jvm -t runner/$IMAGE_NAME:1.0-SNAPSHOT .
+      - name: Build image with jar
+        run: ./mvnw clean package -DskipTests && docker build -f src/main/docker/Dockerfile.jvm -t runner/$IMAGE_NAME:1.0-SNAPSHOT .
 
       - name: Log into registry
         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u stelzo --password-stdin
