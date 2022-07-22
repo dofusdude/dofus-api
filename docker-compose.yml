@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  db:
+    image: postgres
+    container_name: dofus-api_postgres
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=krosmoz_items
+    #volumes:
+    #  - ./data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  api:
+    image: stelzo/dofus-api:java # 'java' tag for jvm based multiplatform image. 'latest' tag is a native image with much less memory usage.
+    container_name: dofus-api
+    ports:
+      - 8081:8080
+    depends_on:
+      - db
+    restart: unless-stopped
+    environment:
+      - QUARKUS_DATASOURCE_USERNAME=user
+      - QUARKUS_DATASOURCE_PASSWORD=password
+      - POSTGRES_HOST=db
+      - ADMIN_API_SECRET=adminsecret
+      - PAGINATION_PAGE_SIZE_MAX=96
+      - POSTGRES_DBNAME=krosmoz_items
