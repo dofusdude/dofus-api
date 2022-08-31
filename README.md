@@ -3,6 +3,11 @@
 
 A multilingual API for the Dofus encyclopedia.
 
+## THE PROJECT IS DEPRECATED AND WILL NEVER GET ANY FEATURE OR DATA UPDATES. USE [THIS API](https://dofus-craftlist.netlify.app) INSTEAD.
+The instance and this repository will stay online for others to help building their own API.
+
+But I advice using the linked new project since it has much more features and the encyclopedia is heavily unreliable and missing languages.
+
 ## Usage
 See the OpenAPI or SwaggerUI endpoint for types and examples:
 - https://enc.dofusdu.de/swagger
